@@ -14,9 +14,10 @@ function Home() {
         const popularMovies = await getPopularMovies();
         setMovies(popularMovies);
       } catch (err) {
-      } finally {
         console.log(err);
         setError("Failed to load movies...");
+      } finally {
+        setLoading(false);
       }
     };
     loadPopularMovies();
@@ -24,15 +25,30 @@ function Home() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    alert(searchQuery);
-    setSearchQuery("");
+    // if (!searchQuery.trim()) return
+    // if (loading) return
+
+    // setLoading(true)
+    // try{
+    //     const searchResults = await searchMovies(searchMovies)
+    //     setMovies(searchResults
+    //         setError(null)
+    //     )
+    // }catch (err) {
+    //     console.log(err);
+    //     setError("Failed to load movies...");
+    // } finally {
+    //   setLoading(false)
+    // }
   };
+
+  //   searchQuery("");
 
   return (
     <div className="home">
       <form onSubmit={handleSearch} className="search-form">
         <input
-          type="type"
+          type="text"
           placeholder="Search for movies..."
           className="search-input"
           value={searchQuery}
@@ -43,16 +59,31 @@ function Home() {
         </button>
       </form>
 
-      <div className="movies-grid">
-        {movies.map(
-          (movie) =>
-            movie.title.toLowerCase().startsWith(searchQuery) && (
-              <MovieCard movie={movie} key={movie.id} />
-            )
-        )}
-      </div>
+      {error && <div className="error-message">{error}</div>}
+
+      {loading ? (
+        <div className="loading">Loading...</div>
+      ) : (
+        <div className="movies-grid">
+          {movies.map((movie) => (
+            <MovieCard movie={movie} key={movie.id} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
+
+//       <div className="movies-grid">
+//         {movies.map(
+//           (movie) =>
+//             movie.title.toLowerCase().startsWith(searchQuery) && (
+//               <MovieCard movie={movie} key={movie.id} />
+//             )
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
 
 export default Home;
