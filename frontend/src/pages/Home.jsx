@@ -23,26 +23,23 @@ function Home() {
     loadPopularMovies();
   }, []);
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    // if (!searchQuery.trim()) return
-    // if (loading) return
+    if (!searchQuery.trim()) return;
+    if (loading) return;
 
-    // setLoading(true)
-    // try{
-    //     const searchResults = await searchMovies(searchMovies)
-    //     setMovies(searchResults
-    //         setError(null)
-    //     )
-    // }catch (err) {
-    //     console.log(err);
-    //     setError("Failed to load movies...");
-    // } finally {
-    //   setLoading(false)
-    // }
+    setLoading(true);
+    try {
+      const searchResults = await searchMovies(searchQuery);
+      setMovies(searchResults);
+      setError(null);
+    } catch (err) {
+      console.log(err);
+      setError("Failed to search movies...");
+    } finally {
+      setLoading(false);
+    }
   };
-
-  //   searchQuery("");
 
   return (
     <div className="home">
@@ -73,17 +70,5 @@ function Home() {
     </div>
   );
 }
-
-//       <div className="movies-grid">
-//         {movies.map(
-//           (movie) =>
-//             movie.title.toLowerCase().startsWith(searchQuery) && (
-//               <MovieCard movie={movie} key={movie.id} />
-//             )
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
 
 export default Home;
