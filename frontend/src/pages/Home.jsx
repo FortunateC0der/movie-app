@@ -1,5 +1,6 @@
 import MovieCard from "../components/MovieCard";
 import { useState } from "react";
+import "../css/Home.css";
 function Home() {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -9,7 +10,7 @@ function Home() {
     { id: 3, title: "The Matrix", release_date: 1998 },
   ];
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
     e.preventDefault();
     alert(searchQuery);
     setSearchQuery("");
@@ -31,10 +32,12 @@ function Home() {
       </form>
 
       <div className="movies-grid">
-        {movies.map((movie) => (
-          // movie.title.toLowerCase().startsWith(searchQuery) &&
-          <MovieCard movie={movie} key={movie.id} />
-        ))}
+        {movies.map(
+          (movie) =>
+            movie.title.toLowerCase().startsWith(searchQuery) && (
+              <MovieCard movie={movie} key={movie.id} />
+            )
+        )}
       </div>
     </div>
   );
